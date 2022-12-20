@@ -1,0 +1,41 @@
+# The Prefix before every Message sent by the ServerSystem
+prefix: '§l§2TheMaCraft: §7'
+
+# Activity Discord
+activity: on TheMaCrafts Community
+
+modules:
+  bansystem:
+    # Enables the ban system.
+    enabled: false
+
+mongodb:
+  # The URL for the connection to the MongoDB database.
+  mongourl: mongodb://admin:%26nsrP%26bxj3ZJ6v@node4.dreamtrail.de:25510
+
+  # The Database of the ServerSystem
+  database: testsystem
+
+  # The Collection which is used for the Playtime (if enabled).
+  playtime: playtime
+
+  # The Collection which is used for the BanSystem (if enabled).
+  bans: bans
+
+ban:
+  '1':
+    time: 60000
+    reason: eine Minute
+    permission: ban.1
+
+banids:
+  - 1
+
+mute:
+  '1':
+    time: 60000
+    reason: eine Minute
+    permission: ban.1
+
+muteids:
+  - 1

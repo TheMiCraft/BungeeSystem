@@ -1,0 +1,5 @@
+name: test
+description: BungeeSystem
+main: com.hrens.BungeeSystem
+author: TheMiCraft
+version: '1.0'

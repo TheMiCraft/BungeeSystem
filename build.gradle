@@ -1,0 +1,32 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
+    id 'java'
+}
+
+group 'com.hrens'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+}
+
+dependencies {
+    implementation 'org.mongodb:mongodb-driver-sync:4.0.5'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    implementation 'com.google.code.gson:gson:2.10'
+    compileOnly 'net.md-5:bungeecord-api:1.19-R0.1-SNAPSHOT'
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+
+}
