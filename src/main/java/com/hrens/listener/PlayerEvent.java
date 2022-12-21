@@ -25,11 +25,7 @@ public class PlayerEvent implements Listener {
     @EventHandler
     public void onJoin(PostLoginEvent event) {
         ProxiedPlayer p = event.getPlayer();
-        System.out.println(123);
-        System.out.println(BungeeSystem.getInstance().module_bansystem);
-        System.out.println(BungeeSystem.getInstance().getBanManager().isBanned(p.getUniqueId()));
         if (BungeeSystem.getInstance().module_bansystem && BungeeSystem.getInstance().getBanManager().isBanned(p.getUniqueId())){
-            System.out.println(1);
             Document document = bans.find(Filters.and(Filters.eq("type", "ban"), Filters.not(Filters.lt("end", System.currentTimeMillis())), Filters.eq("bannedUUID", p.getUniqueId().toString()))).first();
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");

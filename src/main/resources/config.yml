@@ -11,13 +11,10 @@ modules:
 
 mongodb:
   # The URL for the connection to the MongoDB database.
-  mongourl: mongodb://admin:%26nsrP%26bxj3ZJ6v@node4.dreamtrail.de:25510
+  mongourl: mongodb://username:password@ip:port
 
   # The Database of the ServerSystem
-  database: testsystem
-
-  # The Collection which is used for the Playtime (if enabled).
-  playtime: playtime
+  database: bungeesystem
 
   # The Collection which is used for the BanSystem (if enabled).
   bans: bans
