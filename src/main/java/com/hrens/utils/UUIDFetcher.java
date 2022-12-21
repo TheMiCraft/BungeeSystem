@@ -39,33 +39,6 @@ public final class UUIDFetcher {
     /**
      * Returns the UUID of the searched player.
      *
-     * @param player The player.
-     * @return The UUID of the given player.
-     */
-    //Uncomment this if you want the helper method for BungeeCord:
-    /*
-    public static UUID getUUID(ProxiedPlayer player) {
-        return getUUID(player.getName());
-    }
-    */
-
-    /**
-     * Returns the UUID of the searched player.
-     *
-     * @param player The player.
-     * @return The UUID of the given player.
-     */
-    //Uncomment this if you want the helper method for Bukkit/Spigot:
-    /*
-    public static UUID getUUID(Player player) {
-        return getUUID(player.
-        ());
-    }
-    */
-
-    /**
-     * Returns the UUID of the searched player.
-     *
      * @param name The name of the player.
      * @return The UUID of the given player.
      */
