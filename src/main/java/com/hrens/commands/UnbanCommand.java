@@ -18,7 +18,7 @@ public class UnbanCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] strings) {
         UUID senderUUID = sender instanceof ProxiedPlayer ? ((ProxiedPlayer) sender).getUniqueId() : null;
-        if(!sender.hasPermission("serversystem.unban")) {
+        if(!sender.hasPermission("bungeesystem.unban")) {
             sender.sendMessage(BungeeSystem.getInstance().getMessage("notallowed"));
             return;
         }

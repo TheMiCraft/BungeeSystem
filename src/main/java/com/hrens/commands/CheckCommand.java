@@ -25,7 +25,7 @@ public class CheckCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         UUID senderUUID = sender instanceof ProxiedPlayer ? ((ProxiedPlayer) sender).getUniqueId() : null;
-        if(!sender.hasPermission("serversystem.check")) {
+        if(!sender.hasPermission("bungeesystem.check")) {
             sender.sendMessage(BungeeSystem.getInstance().getMessage("notallowed"));
             return;
         }
@@ -42,11 +42,11 @@ public class CheckCommand extends Command {
             target = UUID.fromString(args[0]);
         } else if (args[0].matches("-?\\d+") && banned.countDocuments(Filters.eq("_id", args[0])) != 0) {
             target = banned.find(Filters.eq("_id", args[0])).first().get("bannedUUID", UUID.class);
-        } else {
+        } else{
             sender.sendMessage(BungeeSystem.getInstance().getMessage("checkformat"));
             return;
         }
-        Collection<LogManager.LogEntry> log = BungeeSystem.getInstance().getLogManager().getLogByTarget(target);
+        Collection<LogManager.LogEntry> log = BungeeSystem.getInstance().getLogManager().getLogByTarget(Objects.requireNonNull(target));
         List<String> check_log = log.stream().map(logEntry -> BungeeSystem.getInstance().getMessageString("checklog")
                 .replace("{name}", Objects.nonNull(logEntry.getExecutor()) ? UUIDFetcher.getName(UUID.fromString(logEntry.getExecutor())) : "Console")
                 .replace("{date}", new SimpleDateFormat(BungeeSystem.getInstance().getMessageString("dateformat")).format(new Date(logEntry.getTime())))

@@ -21,7 +21,7 @@ public class RebootCommand extends Command {
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
-        if(!commandSender.hasPermission("BungeeSystem.getInstance().restart")) return;
+        if(!commandSender.hasPermission("bungeesystem.reboot")) return;
         try {
             int n = 10;
             int b = 10;

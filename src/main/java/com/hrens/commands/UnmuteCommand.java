@@ -18,7 +18,7 @@ public class UnmuteCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] strings) {
         UUID senderUUID = sender instanceof ProxiedPlayer ? ((ProxiedPlayer) sender).getUniqueId() : null;
-        if(!sender.hasPermission("serversystem.unmute")) {
+        if(!sender.hasPermission("bungeesystem.unmute")) {
             sender.sendMessage(BungeeSystem.getInstance().getMessage("notallowed"));
             return;
         }
