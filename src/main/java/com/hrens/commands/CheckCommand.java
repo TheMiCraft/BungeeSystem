@@ -19,7 +19,7 @@ public class CheckCommand extends Command {
     MongoCollection<Document> banned;
     public CheckCommand(String name, String permission, String... aliases) {
         super(name, permission, aliases);
-        banned = BungeeSystem.getInstance().getMongodatabase().getCollection(BungeeSystem.getInstance().getConfig().getString("mongodb.bans"));
+        banned = BungeeSystem.getInstance().getMongodatabase().getCollection("bans");
     }
 
     @Override

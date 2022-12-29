@@ -26,7 +26,7 @@ public class UnbanCommand extends Command {
             try {
                 int _id = Integer.parseInt(strings[0]);
                 String reason = strings.length > 1 ? strings[1] : null;
-                Document document = BungeeSystem.getInstance().getMongodatabase().getCollection(BungeeSystem.getInstance().getConfig().getString("mongodb.bans"))
+                Document document = BungeeSystem.getInstance().getMongodatabase().getCollection("bans")
                         .find(Filters.and(Filters.eq("_id", _id), Filters.eq("type", "ban"))).first();
                 if (Objects.nonNull(document)) {
                     BungeeSystem.getInstance().getBanManager().unban(_id, senderUUID, UUID.fromString(document.getString("bannedUUID")), reason);

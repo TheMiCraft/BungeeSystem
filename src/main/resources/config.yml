@@ -2,7 +2,7 @@
 prefix: '§l§2TheMaCraft: §7'
 
 # Activity Discord
-activity: on TheMaCrafts Community
+activity: 'on TheMaCrafts Community'
 
 modules:
   bansystem:
@@ -11,19 +11,19 @@ modules:
 
 mongodb:
   # The URL for the connection to the MongoDB database.
-  mongourl: mongodb://username:password@ip:port
+  mongourl: 'mongodb://username:password@ip:port'
 
   # The Database of the ServerSystem
-  database: bungeesystem
+  database: 'bungeesystem'
 
   # The Collection which is used for the BanSystem (if enabled).
-  bans: bans
+  bans: 'bans'
 
 ban:
   '1':
     time: 60000
-    reason: eine Minute
-    permission: ban.1
+    reason: 'eine Minute'
+    permission: 'ban.1'
 
 banids:
   - 1
@@ -31,8 +31,8 @@ banids:
 mute:
   '1':
     time: 60000
-    reason: eine Minute
-    permission: ban.1
+    reason: 'eine Minute'
+    permission: 'ban.1'
 
 muteids:
   - 1

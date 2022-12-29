@@ -4,6 +4,7 @@ import com.hrens.BungeeSystem;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -18,37 +19,47 @@ public class BanManager {
     private final MongoCollection<Document> banned;
 
     public BanManager() {
-        banned = BungeeSystem.getInstance().getMongodatabase().getCollection(BungeeSystem.getInstance().getConfig().getString("mongodb.bans"));
+        banned = BungeeSystem.getInstance().getMongodatabase().getCollection("bans");
     }
 
     public void mute(UUID uuid, int reason, UUID moderator) {
         int _id = generateId();
         String reasonAsString = BungeeSystem.getInstance().getConfig().getString("mute." + reason + ".reason");
         ProxiedPlayer p = BungeeSystem.getInstance().getProxy().getPlayer(uuid);
+        long l = System.currentTimeMillis() + BungeeSystem.getInstance().getConfig().getLong("mute." + reason + ".time");
         Document document = new Document()
                 .append("_id", _id)
                 .append("bannedUUID", uuid.toString())
                 .append("moderatorUUID", Objects.nonNull(moderator) ? moderator.toString() : null)
                 .append("reason", reason)
                 .append("timestamp", System.currentTimeMillis())
-                .append("end", (System.currentTimeMillis() + BungeeSystem.getInstance().getConfig().getLong("mute." + reason + ".time")))
+                .append("end", (BungeeSystem.getInstance().getConfig().getLong("mute." + reason + ".time")!=-1L) ? l : -1L)
                 .append("type", "mute");
         banned.insertOne(document);
         ProxiedPlayer player = BungeeSystem.getInstance().getProxy().getPlayer(uuid);
         if(player != null){
-            Duration diff = Duration.ofMillis((System.currentTimeMillis() + BungeeSystem.getInstance().getConfig().getLong("ban." + reason + ".time"))-System.currentTimeMillis());
-            String s = BungeeSystem.getInstance().getMessageString("bandateformat")
+            String s = duration(reason, "mute");
+            player.sendMessage(TextComponent.fromLegacyText(BungeeSystem.getInstance().getMessageString("mutemessage")
+                    .replace("{id}", String.valueOf(_id))
+                    .replace("{reason}", reasonAsString)
+                    .replace("{duration}", s.toLowerCase())));
+        }
+        LogManager.LogEntry logEntry = new LogManager.LogEntry(LogManager.LogEntry.LogType.MUTE, Objects.nonNull(moderator) ? moderator.toString() : null, uuid.toString(), System.currentTimeMillis(), reasonAsString);
+        BungeeSystem.getInstance().getLogManager().addEntry(logEntry);
+    }
+
+    private String duration(int reason, String type) {
+        long l = BungeeSystem.getInstance().getConfig().getLong(type + "." + reason + ".time");
+        if(l != -1L) {
+            Duration diff = Duration.ofMillis((System.currentTimeMillis() + l) - System.currentTimeMillis());
+            return BungeeSystem.getInstance().getMessageString("bandateformat")
                     .replace("{d}", String.valueOf(diff.toDays()))
                     .replace("{h}", String.valueOf(diff.toHours() % 24))
                     .replace("{m}", String.valueOf(diff.toMinutes() % 60))
                     .replace("{s}", String.valueOf((diff.toMillis() / 1000) % 60));
-            player.sendMessage(BungeeSystem.getInstance().getMessageString("mutemessage")
-                    .replace("{id}", String.valueOf(_id))
-                    .replace("{reason}", reasonAsString)
-                    .replace("{duration}", s.toLowerCase()));
+        } else {
+            return BungeeSystem.getInstance().getMessageString("permanent");
         }
-        LogManager.LogEntry logEntry = new LogManager.LogEntry(LogManager.LogEntry.LogType.MUTE, Objects.nonNull(moderator) ? moderator.toString() : null, uuid.toString(), System.currentTimeMillis(), reasonAsString);
-        BungeeSystem.getInstance().getLogManager().addEntry(logEntry);
     }
 
     public void ban(UUID uuid, int reason, UUID moderator) {
@@ -56,39 +67,36 @@ public class BanManager {
         String reasonAsString = BungeeSystem.getInstance().getConfig().getString("ban." + reason + ".reason");
         ProxiedPlayer player = BungeeSystem.getInstance().getProxy().getPlayer(uuid);
         if(player != null){
-            Duration diff = Duration.ofMillis((System.currentTimeMillis() + BungeeSystem.getInstance().getConfig().getLong("ban." + reason + ".time"))-System.currentTimeMillis());
-            String s = BungeeSystem.getInstance().getMessageString("bandateformat")
-                    .replace("{d}", String.valueOf(diff.toDays()))
-                    .replace("{h}", String.valueOf(diff.toHours() % 24))
-                    .replace("{m}", String.valueOf(diff.toMinutes() % 60))
-                    .replace("{s}", String.valueOf((diff.toMillis() / 1000) % 60));
-            player.disconnect(BungeeSystem.getInstance().getMessageString("banmessage")
+            String s = duration(reason, "ban");
+            player.disconnect(TextComponent.fromLegacyText(BungeeSystem.getInstance().getMessageString("banmessage")
                     .replace("{id}", String.valueOf(_id))
                     .replace("{reason}", reasonAsString)
-                    .replace("{duration}", s.toLowerCase()));
+                    .replace("{duration}", s.toLowerCase())));
         }
+        long l = System.currentTimeMillis() + BungeeSystem.getInstance().getConfig().getLong("ban." + reason + ".time");
+        String executor = Objects.nonNull(moderator) ? moderator.toString() : null;
         Document document = new Document()
                 .append("_id", _id)
                 .append("bannedUUID", uuid.toString())
-                .append("moderatorUUID", Objects.nonNull(moderator) ? moderator.toString() : null)
+                .append("moderatorUUID", executor)
                 .append("reason", reason)
                 .append("timestamp", System.currentTimeMillis())
-                .append("end", (System.currentTimeMillis() + BungeeSystem.getInstance().getConfig().getLong("ban." + reason + ".time")))
+                .append("end", (BungeeSystem.getInstance().getConfig().getLong("ban." + reason + ".time")!=-1L) ? l : -1L)
                 .append("type", "ban");
         banned.insertOne(document);
 
-        LogManager.LogEntry logEntry = new LogManager.LogEntry(LogManager.LogEntry.LogType.BAN, Objects.nonNull(moderator) ? moderator.toString() : null, uuid.toString(), System.currentTimeMillis(), reasonAsString);
+        LogManager.LogEntry logEntry = new LogManager.LogEntry(LogManager.LogEntry.LogType.BAN, executor, uuid.toString(), System.currentTimeMillis(), reasonAsString);
         BungeeSystem.getInstance().getLogManager().addEntry(logEntry);
     }
 
     public boolean isMuted(UUID uuid) {
-        Bson b = Filters.and(Filters.eq("bannedUUID", uuid.toString()), Filters.eq("type", "mute"), Filters.not(Filters.lt("end", System.currentTimeMillis())));
+        Bson b = Filters.and(Filters.eq("bannedUUID", uuid.toString()), Filters.eq("type", "mute"), Filters.or(Filters.not(Filters.lt("end", System.currentTimeMillis())), Filters.eq("end", -1)) );
         if(Objects.nonNull(banned.find(b).first())) return true;
         return false;
     }
 
     public boolean isBanned(UUID uuid) {
-        Bson b = Filters.and(Filters.eq("bannedUUID", uuid.toString()), Filters.eq("type", "ban"), Filters.not(Filters.lt("end", System.currentTimeMillis())));
+        Bson b = Filters.and(Filters.eq("bannedUUID", uuid.toString()), Filters.eq("type", "ban"), Filters.or(Filters.not(Filters.lt("end", System.currentTimeMillis())), Filters.eq("end", -1)) );
         if(Objects.nonNull(banned.find(b).first())) return true;
         return false;
     }
