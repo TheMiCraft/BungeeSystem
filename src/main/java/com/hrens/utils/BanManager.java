@@ -9,13 +9,10 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.*;
 
 public class BanManager {
-    private static final String ID_CHARS = "123456789";
-    private static final Random random = new SecureRandom();
     private final MongoCollection<Document> banned;
 
     public BanManager() {
@@ -151,30 +148,6 @@ public class BanManager {
             }
         }
         return i;
-    }
-
-    public String getDateFromMillis(long millis) {
-        return formatDuration(Duration.ofMillis(millis));
-    }
-
-    private String formatDuration(Duration d) {
-        long days = d.toDays();
-        d = d.minusDays(days);
-        long hours = d.toHours();
-        d = d.minusHours(hours);
-        long minutes = d.toMinutes();
-        d = d.minusMinutes(minutes);
-        long seconds = d.getSeconds();
-        String string =
-                (days == 0 ? "" : (days == 1) ? days + " Tag, " : days + " Tage, ") +
-                        (hours == 0 ? "" : (hours == 1) ? hours + " Stunde, " : hours + " Stunden, ") +
-                        (minutes == 0 ? "" : (minutes == 1) ? minutes + " Minute, " : minutes + " Minuten, ") +
-                        (seconds == 0 ? "" : (seconds == 1) ? seconds + " Sekunde, " : seconds + " Sekunden, ");
-        if (string.length() > 2)
-            string = string.substring(0, string.length() - 2);
-        else
-            string = "0 Sekunden";
-        return string;
     }
 
 }

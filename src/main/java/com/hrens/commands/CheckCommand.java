@@ -37,7 +37,7 @@ public class CheckCommand extends Command {
         UUID target;
         if (UUIDFetcher.getUUID(args[0]) != null) {
             target = UUIDFetcher.getUUID(args[0]);
-        } else if (args[0].matches("/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/")
+        } else if (args[0].matches("/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{13}$/")
                 && UUIDFetcher.getName(UUID.fromString(args[0])) != null) {
             target = UUID.fromString(args[0]);
         } else if (args[0].matches("-?\\d+") && banned.countDocuments(Filters.eq("_id", args[0])) != 0) {
@@ -53,6 +53,8 @@ public class CheckCommand extends Command {
                 .replace("{reason}", Objects.nonNull(logEntry.getReason()) ? logEntry.getReason() : "No Reason")
                 .replace("{type}", logEntry.getType().toString())
         ).collect(Collectors.toList());
+        if(check_log.isEmpty()) sender.sendMessage(BungeeSystem.getInstance().getMessage("nohistory"));
+
         sender.sendMessage(TextComponent.fromLegacyText(BungeeSystem.getInstance().getMessageString("checkheader") + "\n" + String.join("\n", check_log)));
     }
 }

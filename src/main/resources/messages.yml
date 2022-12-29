@@ -1,29 +1,30 @@
-playernotfound: '{prefix}Dieser Spieler konnte nicht gefunden werden.'
-notallowed: '{prefix}Das darfst du nicht!'
-giveonearguments: '{prefix}Bitte gebe genau ein Argument an.'
-serverrestartseconds: '§l§cDer Server wird in §7{seconds} Sekunden §cneugestartet!'
-banmessage: '§c§lDu wurdest gebannt! §8(§6{duration}§8)§r\n§bBegründung§7:§f {reason} §8(§a{id}§8)'
-youarebanned: '§c§lDu wurdest gebannt! §8(bis §6{date}§8)§r\n§bBegründung§7:§f {reason} §8(§a{id}§8)'
-playerbanned: '{prefix}Der Spieler wurde erfolgreich gebannt!'
-noinfo: 'Keine Angabe'
-permanent: 'Permanent'
-layoutban2: '{prefix}Bitte gebe eine Zahl mit Einheit an. Beispiel: 1s 2m 3h 4d'
-banformat: '{prefix}Bitte gib [/ban {Spieler} {ID}] an.'
-bandateformat: '{d}d {h}h {m}m {s}s'
-playernotpunished: '{prefix}Dieser Spieler ist aktuell nicht gebannt..'
-successfullyunbanned: '{prefix}Der Spieler wurde erfolgreich entbannt.'
-unbanidnotexist: '{prefix}Diese UnbanID existiert nicht.'
-unbansucceeded: '{prefix}Der Ban wurde erfolgreich aufgelöst.'
-idnumber: '{prefix}Bitte gebe als ID eine Nummmer an.'
-idnotexist: '{prefix}Diese ID existiert nicht.'
-unmuteidnotexist: '{prefix}Diese UnmuteID existiert nicht.'
-unmutesucceeded: '{prefix}Der Mute wurde erfolgreich aufgelöst.'
-muteformat: '{prefix}Bitte gib [/mute {Spieler} {ID}] an.'
-playermuted: '{prefix}Der Spieler wurde erfolgreich gemuted!'
-youaremuted: '{prefix}§c§lDu wurdest gemuted! §8(bis §6{date}§8)§r §bBegründung§7:§f {reason} §8(§a{id}§8)'
-mutemessage: '{prefix}§c§lDu wurdest gemuted! §8(§6{duration}§8)§r §bBegründung§7:§f {reason} §8(§a{id}§8)'
-dateformat: 'dd-MM-yyyy HH:mm:ss'
-checkformat: '{prefix}Bitte gib [/check {Name/UUID/ID}] ein.'
-checklog: '{name} | {date} | {type} | {reason}'
-checkheader: 'Header'
-serverisrestarting: '§cDer Server wird neugestartet. Du kannst dich in 30 Sekunden erneut verbinden.'
+playernotfound: "{prefix}Dieser Spieler konnte nicht gefunden werden."
+notallowed: "{prefix}Das darfst du nicht!"
+giveonearguments: "{prefix}Bitte gebe genau ein Argument an."
+serverrestartseconds: "§l§cDer Server wird in §7{seconds} Sekunden §cneugestartet!"
+banmessage: "§c§lDu wurdest gebannt! §8(§6{duration}§8)§r\n§bBegründung§7:§f {reason} §8(§a{id}§8)"
+youarebanned: "§c§lDu wurdest gebannt! §8(bis §6{date}§8)§r\n§bBegründung§7:§f {reason} §8(§a{id}§8)"
+playerbanned: "{prefix}Der Spieler wurde erfolgreich gebannt!"
+noinfo: "Keine Angabe"
+permanent: "Permanent"
+layoutban2: "{prefix}Bitte gebe eine Zahl mit Einheit an. Beispiel: 1s 2m 3h 4d"
+banformat: "{prefix}Bitte gib [/ban {Spieler} {ID}] an."
+bandateformat: "{d}d {h}h {m}m {s}s"
+playernotpunished: "{prefix}Dieser Spieler ist aktuell nicht gebannt.."
+successfullyunbanned: "{prefix}Der Spieler wurde erfolgreich entbannt."
+unbanidnotexist: "{prefix}Diese UnbanID existiert nicht."
+unbansucceeded: "{prefix}Der Ban wurde erfolgreich aufgelöst."
+idnumber: "{prefix}Bitte gebe als ID eine Nummmer an."
+idnotexist: "{prefix}Diese ID existiert nicht."
+unmuteidnotexist: "{prefix}Diese UnmuteID existiert nicht."
+unmutesucceeded: "{prefix}Der Mute wurde erfolgreich aufgelöst."
+muteformat: "{prefix}Bitte gib [/mute {Spieler} {ID}] an."
+playermuted: "{prefix}Der Spieler wurde erfolgreich gemuted!"
+youaremuted: "{prefix}§c§lDu wurdest gemuted! §8(bis §6{date}§8)§r §bBegründung§7:§f {reason} §8(§a{id}§8)"
+mutemessage: "{prefix}§c§lDu wurdest gemuted! §8(§6{duration}§8)§r §bBegründung§7:§f {reason} §8(§a{id}§8)"
+dateformat: "dd-MM-yyyy HH:mm:ss"
+checkformat: "{prefix}Bitte gib [/check {Name/UUID/ID}] ein."
+checklog: "{name} | {date} | {type} | {reason}"
+checkheader: "Header"
+nohistory: "{prefix}Dieser Spieler hat keine Einträge!"
+serverisrestarting: "§cDer Server wird neugestartet. Du kannst dich in 30 Sekunden erneut verbinden."
