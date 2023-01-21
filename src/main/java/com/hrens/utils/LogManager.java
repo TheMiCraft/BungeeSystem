@@ -70,8 +70,8 @@ public class LogManager {
             UNBAN,
             MUTE,
             UNMUTE,
-            KICK
-
+            KICK,
+            WARN
         }
 
         public String getExecutor() {

@@ -70,8 +70,8 @@ public class BanManager {
                     .replace("{reason}", reasonAsString)
                     .replace("{duration}", s.toLowerCase())));
         }
-        long l = System.currentTimeMillis() + BungeeSystem.getInstance().getConfig().getLong("ban." + reason + ".time");
         String executor = Objects.nonNull(moderator) ? moderator.toString() : null;
+        long l = System.currentTimeMillis() + BungeeSystem.getInstance().getConfig().getLong("ban." + reason + ".time");
         Document document = new Document()
                 .append("_id", _id)
                 .append("bannedUUID", uuid.toString())
@@ -83,6 +83,29 @@ public class BanManager {
         banned.insertOne(document);
 
         LogManager.LogEntry logEntry = new LogManager.LogEntry(LogManager.LogEntry.LogType.BAN, executor, uuid.toString(), System.currentTimeMillis(), reasonAsString);
+        BungeeSystem.getInstance().getLogManager().addEntry(logEntry);
+    }
+
+    public void warn(UUID uuid, String reason, UUID moderator){
+        int _id = generateId();
+        ProxiedPlayer player = BungeeSystem.getInstance().getProxy().getPlayer(uuid);
+        if(player != null){
+            player.sendMessage(TextComponent.fromLegacyText(BungeeSystem.getInstance().getMessageString("warnmessage")
+                    .replace("{id}", String.valueOf(_id))
+                    .replace("{reason}", Objects.nonNull(reason) ? reason : BungeeSystem.getInstance().getMessageString("noreason"))));
+        }
+        String executor = Objects.nonNull(moderator) ? moderator.toString() : null;
+        Document document = new Document()
+                .append("_id", _id)
+                .append("bannedUUID", uuid.toString())
+                .append("moderatorUUID", executor)
+                .append("reason", reason)
+                .append("timestamp", System.currentTimeMillis())
+                .append("end", null)
+                .append("type", "warn");
+        banned.insertOne(document);
+
+        LogManager.LogEntry logEntry = new LogManager.LogEntry(LogManager.LogEntry.LogType.WARN, executor, uuid.toString(), System.currentTimeMillis(), reason);
         BungeeSystem.getInstance().getLogManager().addEntry(logEntry);
     }
 

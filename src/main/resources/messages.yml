@@ -28,3 +28,6 @@ checklog: "{name} | {date} | {type} | {reason}"
 checkheader: "Header"
 nohistory: "{prefix}Dieser Spieler hat keine Einträge!"
 serverisrestarting: "§cDer Server wird neugestartet. Du kannst dich in 30 Sekunden erneut verbinden."
+playerwarned: '{prefix}Der Spieler wurde erfolgreich verwarnt!'
+warnformat: '{prefix}Bitte gib [/warn {Spieler} [Reason]] an.'
+warnmessage: '{prefix}§c§lDu wurdest verwarnt! §bBegründung§7:§f {reason} §8(§a{id}§8)'

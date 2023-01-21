@@ -61,6 +61,7 @@ public class BungeeSystem extends Plugin {
         pluginManager.registerCommand(this, new UnmuteCommand("unmute", "bungeesystem.unmute"));
         pluginManager.registerCommand(this, new CheckCommand("check", "bungeesystem.check"));
         pluginManager.registerCommand(this, new RebootCommand("reboot", "bungeesystem.reboot"));
+        pluginManager.registerCommand(this, new WarnCommand("warn", "bungeesystem.warn"));
         pluginManager.registerListener(this, new PlayerEvent());
         getLogger().info("Loaded Serversystem");
     }
